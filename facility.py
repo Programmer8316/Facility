@@ -1,32 +1,13 @@
 import sys
 import csv
-
-class Exceptions:
-    def value_error(value, expression):
-        valid = False
-
-        if not expression:
-            try:
-                float(value)
-            except ValueError:
-                valid = True
-            else:
-                print("Response must be non-numeric.")
-        else:
-            try:
-                float(value)
-                valid = True
-            except ValueError:
-                print("Non-numeric values not accepted.")
-
-        return valid
+from exceptions import *
 
 def main():
     if password():
         while True:
             action = input("\nSelect action[write/read/cancel]: ").lower()
             
-            if Exceptions.value_error(action, False):
+            if PassError().catch(action, False):
                 if action == "read":
                     selection()
                 elif action == "write":
@@ -42,7 +23,7 @@ def password():
     for i in range(attempts):
         code = int(input("Enter access code: "))
 
-        if Exceptions.value_error(code, True):
+        if PassError().catch(code, True):
             if code == 8316:
                 print("System access granted.")
                 return True
